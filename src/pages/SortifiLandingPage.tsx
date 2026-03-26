@@ -3,11 +3,11 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import './SortifiLandingPage.css';
+import './CluedoxLandingPage.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SortifiLandingPage() {
+export default function CluedoxLandingPage() {
   const navigate = useNavigate();
   const words = React.useMemo(() => ["Memory", "Meaning", "Content", "Context", "Dates"], []);
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
@@ -567,11 +567,11 @@ export default function SortifiLandingPage() {
   }, []);
 
   return (
-    <div className="sortifi-landing-page">
+    <div className="Cluedox-landing-page">
       <nav id="navbar">
         <a href="#" className="nav-logo">
           <div className="nav-logo-icon">📁</div>
-          Sortifi
+          Cluedox
         </a>
         <ul className="nav-links">
           <li><a href="#features">Features</a></li>
@@ -618,7 +618,7 @@ export default function SortifiLandingPage() {
         <h1 className="hero-heading" id="hero-heading" style={{ position: 'relative', zIndex: '10', opacity: 1 }}>
           Search any file by {currentText}<span className="cursor-blink" style={{ fontWeight: 300, display: 'inline-block' }}>|</span>
         </h1>
-        <p className="hero-sub" style={{ position: 'relative', zIndex: '10', }}>Sortifi <strong>securely organises every document you own</strong> — automatically. Search by meaning, find what you need instantly, never lose a file again.</p>
+        <p className="hero-sub" style={{ position: 'relative', zIndex: '10', }}>Cluedox <strong>securely organises every document you own</strong> — automatically. Search by meaning, find what you need instantly, never lose a file again.</p>
         <div className="hero-actions" style={{ position: 'relative', zIndex: '10', }}>
           <a href="#" className="btn-primary">Get Started Free →</a>
           <a href="#features" className="btn-ghost">Explore Features ↓</a>
@@ -639,7 +639,7 @@ export default function SortifiLandingPage() {
           <div className="pw-sidebar">
             <div className="pw-sb-logo">
               <div className="pw-sb-logo-icon">📁</div>
-              <span className="pw-sb-logo-name">Sortifi</span>
+              <span className="pw-sb-logo-name">Cluedox</span>
             </div>
             <div className="pw-sb-section">
               <div className="pw-sb-item active"><span className="pw-sb-item-icon">🏠</span><span className="pw-sb-item-text">Home</span></div>
@@ -739,8 +739,8 @@ export default function SortifiLandingPage() {
       <section id="solution">
         <div className="solution-card" id="solution-card">
           <div className="section-eyebrow" style={{ justifyContent: 'center', }}>⊞ THE SOLUTION</div>
-          <h2 className="solution-heading">Sortifi securely organises your files.</h2>
-          <p className="solution-sub">The moment you upload a document, Sortifi securely categorises it — letting you find what you need by meaning, not just filename.</p>
+          <h2 className="solution-heading">Cluedox securely organises your files.</h2>
+          <p className="solution-sub">The moment you upload a document, Cluedox securely categorises it — letting you find what you need by meaning, not just filename.</p>
           <div className="solution-checks">
             <span className="solution-check">Auto-tagging</span>
             <span className="solution-check">Smart summaries</span>
@@ -775,7 +775,7 @@ export default function SortifiLandingPage() {
             <div className="fgm-item">
               <div className="fgm-icon">⏰</div>
               <div className="fgm-title">Smart Expiry Reminders</div>
-              <div className="fgm-body">Sortifi detects expiry dates and sets reminders automatically. Never miss a renewal or deadline.</div>
+              <div className="fgm-body">Cluedox detects expiry dates and sets reminders automatically. Never miss a renewal or deadline.</div>
             </div>
             <div className="fgm-item">
               <div className="fgm-icon">🔗</div>
@@ -785,7 +785,7 @@ export default function SortifiLandingPage() {
             <div className="fgm-item">
               <div className="fgm-icon">📁</div>
               <div className="fgm-title">Smart Auto-Folders</div>
-              <div className="fgm-body">Invoices, legal, medical, personal — Sortifi organises automatically. Custom tags keep everything in place.</div>
+              <div className="fgm-body">Invoices, legal, medical, personal — Cluedox organises automatically. Custom tags keep everything in place.</div>
             </div>
             <div className="fgm-item">
               <div className="fgm-icon">👥</div>
@@ -795,7 +795,7 @@ export default function SortifiLandingPage() {
             <div className="fgm-item">
               <div className="fgm-icon">☁️</div>
               <div className="fgm-title">Google Drive Import</div>
-              <div className="fgm-body">Connect Google Drive to import and export seamlessly. Your existing documents, now with Sortifi intelligence.</div>
+              <div className="fgm-body">Connect Google Drive to import and export seamlessly. Your existing documents, now with Cluedox intelligence.</div>
             </div>
           </div>
 
@@ -867,7 +867,7 @@ export default function SortifiLandingPage() {
           <div id="wire-heading">
             <div className="wh-eyebrow">⊞ HOW IT WORKS</div>
             <h2 className="wh-h1">Your mess of files,<br />sorted in seconds.</h2>
-            <p className="wh-sub">Drop anything — Sortifi connects the dots automatically.</p>
+            <p className="wh-sub">Drop anything — Cluedox connects the dots automatically.</p>
           </div>
 
           {/*  THE 5 SCATTERED CARDS  */}
@@ -908,6 +908,7 @@ export default function SortifiLandingPage() {
             </div>
           </div>
 
+
           <div className="wcard" id="wcB" style={{ width: '196px', }}><div className="wcdot"></div><div className="wfname"><div className="wficon" style={{ background: '#e4eef8', }}>📝</div>vendor_agreement.pdf</div><div className="wlines"><div className="wln m"></div><div className="wln f"></div><div className="wln s"></div></div><div className="wtags"><span className="wtag wtb">Legal</span><span className="wtag wtg">Active</span></div></div>
           <div className="wcard" id="wcC" style={{ width: '190px', }}><div className="wcdot"></div><div className="wfname"><div className="wficon" style={{ background: '#e4f5ec', }}>📊</div>gst_march_2025.xlsx</div><div className="wlines"><div className="wln f"></div><div className="wln s"></div></div><div className="wtags"><span className="wtag wtg">GST</span><span className="wtag wtb">Finance</span><span className="wtag wtn">Q1 2025</span></div></div>
           <div className="wcard" id="wcD" style={{ width: '205px', }}><div className="wcdot"></div><div className="wfname"><div className="wficon" style={{ background: '#f3e8ff', }}>📄</div>employment_contract.pdf</div><div className="wlines"><div className="wln f"></div><div className="wln m"></div><div className="wln f"></div></div><div className="wtags"><span className="wtag wtp">HR</span><span className="wtag wtb">Legal</span></div></div>
@@ -916,7 +917,7 @@ export default function SortifiLandingPage() {
           {/*  SEARCH BOX  */}
           <div id="wsbox">
             <div className="wdot-t"></div><div className="wdot-b"></div>
-            <div className="wsb-head"><div className="wsb-logo">📁</div><div><div className="wsb-t">Sortifi Intelligence</div><div className="wsb-s">5 files connected · searching...</div></div></div>
+            <div className="wsb-head"><div className="wsb-logo">📁</div><div><div className="wsb-t">Cluedox Intelligence</div><div className="wsb-s">5 files connected · searching...</div></div></div>
             <div className="wsb-chips">
               <span className="wchip"><span className="wchipdot" style={{ background: '#e05c5c', }}></span>insurance_policy.pdf</span>
               <span className="wchip"><span className="wchipdot" style={{ background: '#4a90d9', }}></span>vendor_agreement.pdf</span>
@@ -942,7 +943,7 @@ export default function SortifiLandingPage() {
             <div className="capture-feature">
               <div className="cf-icon">📤</div>
               <div className="cf-title">Drop From Any Device</div>
-              <div className="cf-body">Upload from your phone, desktop, or tablet. PDF, photo, scan, DOCX — Sortifi handles every format instantly.</div>
+              <div className="cf-body">Upload from your phone, desktop, or tablet. PDF, photo, scan, DOCX — Cluedox handles every format instantly.</div>
             </div>
             <div className="capture-feature">
               <div className="cf-icon">🔤</div>
@@ -952,7 +953,7 @@ export default function SortifiLandingPage() {
             <div className="capture-feature">
               <div className="cf-icon">☁️</div>
               <div className="cf-title">Google Drive Import</div>
-              <div className="cf-body">Connect Google Drive to import existing documents seamlessly. Your old files, now with Sortifi intelligence.</div>
+              <div className="cf-body">Connect Google Drive to import existing documents seamlessly. Your old files, now with Cluedox intelligence.</div>
             </div>
           </div>
         </div>
@@ -962,7 +963,7 @@ export default function SortifiLandingPage() {
           <div className="section-eyebrow" style={{ justifyContent: 'center', color: 'rgba(10,31,20,0.35)', marginBottom: '20px', }}>⊞ CORE FEATURES</div>
           <p className="features-quote" id="features-quote">"If AI could handle your filing, how much time would you have for the <em>work that actually matters?</em>"</p>
           <div className="features-cta-area" id="features-cta">
-            <a href="#" className="btn-dark-solid">Create In Sortifi — Free</a>
+            <a href="#" className="btn-dark-solid">Create In Cluedox — Free</a>
           </div>
 
           <div className="feature-cards-grid" id="feat-grid">
@@ -970,7 +971,7 @@ export default function SortifiLandingPage() {
             <div className="feat-card feat-card-large" data-delay="0">
               <div className="feat-card-icon">🔍</div>
               <div className="feat-card-title">9 Search Modes</div>
-              <div className="feat-card-body">Most tools give you one way to search. Sortifi gives you nine — keyword, semantic, natural language, tag, date, entity, type, summary, AI chat.</div>
+              <div className="feat-card-body">Most tools give you one way to search. Cluedox gives you nine — keyword, semantic, natural language, tag, date, entity, type, summary, AI chat.</div>
               <div className="feat-card-screen">
                 <div className="search-grid-mini">
                   <div className="sgm-item"><div className="sgm-icon">🔑</div><div className="sgm-name">Keyword</div><div className="sgm-desc">Inside file content</div></div>
@@ -1016,7 +1017,7 @@ export default function SortifiLandingPage() {
         </div>
       </section>
       <section id="who">
-        <div className="section-eyebrow" style={{ justifyContent: 'center', }}>⊞ WHO'S SORTIFI FOR</div>
+        <div className="section-eyebrow" style={{ justifyContent: 'center', }}>⊞ WHO'S Cluedox FOR</div>
         <h2 className="who-heading" id="who-heading">For anyone who works with documents and can't afford to lose them.</h2>
 
         <div id="carousel-wrapper">
@@ -1136,12 +1137,12 @@ export default function SortifiLandingPage() {
         <div className="security-inner">
           <div className="section-eyebrow">⊞ SECURITY & PRIVACY</div>
           <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: '#fff', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Sortifi is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
+          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
           <div className="security-grid" id="security-grid">
             <div className="sec-card"><div className="sec-card-icon">🔒</div><div className="sec-card-title">AES-256 + TLS 1.3</div><div className="sec-card-body">Military-grade encryption at rest and in transit. Your files are always protected.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🛡️</div><div className="sec-card-title">Zero Knowledge</div><div className="sec-card-body">Our team physically cannot access your file contents. Only you hold the keys — by design.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🚫</div><div className="sec-card-title">No Data Trading</div><div className="sec-card-body">Your data is never sold, shared with third parties, or used for advertising. Ever.</div></div>
-            <div className="sec-card"><div className="sec-card-icon">🤖</div><div className="sec-card-title">AI Privacy</div><div className="sec-card-body">Sortifi processes your files in real-time securely. Your content never trains any AI model.</div></div>
+            <div className="sec-card"><div className="sec-card-icon">🤖</div><div className="sec-card-title">AI Privacy</div><div className="sec-card-body">Cluedox processes your files in real-time securely. Your content never trains any AI model.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🇮🇳</div><div className="sec-card-title">DPDP 2023 Ready</div><div className="sec-card-body">Built for India's Digital Personal Data Protection Act 2023 from day one.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🗑️</div><div className="sec-card-title">Right to Delete</div><div className="sec-card-body">Delete your account and all data is permanently wiped within 30 days. No hidden copies.</div></div>
           </div>
@@ -1154,33 +1155,33 @@ export default function SortifiLandingPage() {
         </div>
         <div className="testi-rows">
           <div className="testi-row testi-row-1">
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Sortifi found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Cluedox found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The auto-reminder for our insurance renewals alone is worth it. We almost missed a ₹40L policy renewal."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Sortifi. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Cluedox. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The natural language search understood 'GST invoices from March' perfectly. It just works."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c4617a', }}>AS</div><div><div className="testi-name">Arjun Shah</div><div className="testi-role">SMB Owner · Ahmedabad</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Sortifi's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Sortifi's expiry detection smartly flags renewals weeks before. It's like having a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Cluedox's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Cluedox's expiry detection smartly flags renewals weeks before. It's like having a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
             {/*  duplicate for seamless  */}
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Sortifi found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Cluedox found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The auto-reminder for our insurance renewals alone is worth it. We almost missed a ₹40L policy renewal."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Sortifi. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Cluedox. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The natural language search understood 'GST invoices from March' perfectly. It just works."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c4617a', }}>AS</div><div><div className="testi-name">Arjun Shah</div><div className="testi-role">SMB Owner · Ahmedabad</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Sortifi's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Sortifi's expiry detection smartly flags renewals weeks before. It's like having a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Cluedox's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Cluedox's expiry detection smartly flags renewals weeks before. It's like having a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
           </div>
           <div className="testi-row testi-row-2">
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The natural language search understood 'GST invoices from March' perfectly."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c4617a', }}>AS</div><div><div className="testi-name">Arjun Shah</div><div className="testi-role">SMB Owner · Ahmedabad</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Sortifi's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"We almost missed a ₹40L policy renewal. Sortifi's reminders saved us. Incredible product."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Sortifi's expiry detection smartly flags renewals weeks before. Like a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"What used to take an hour takes 5 minutes. Sortifi is essential for our clinic operations."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Cluedox's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"We almost missed a ₹40L policy renewal. Cluedox's reminders saved us. Incredible product."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Cluedox's expiry detection smartly flags renewals weeks before. Like a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"What used to take an hour takes 5 minutes. Cluedox is essential for our clinic operations."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Found everything in under 2 seconds. The auto-tagging is frighteningly accurate."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
             {/*  duplicate  */}
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The natural language search understood 'GST invoices from March' perfectly."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c4617a', }}>AS</div><div><div className="testi-name">Arjun Shah</div><div className="testi-role">SMB Owner · Ahmedabad</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Sortifi's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"We almost missed a ₹40L policy renewal. Sortifi's reminders saved us. Incredible product."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Sortifi's expiry detection smartly flags renewals weeks before. Like a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"What used to take an hour takes 5 minutes. Sortifi is essential for our clinic operations."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Cluedox's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"We almost missed a ₹40L policy renewal. Cluedox's reminders saved us. Incredible product."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Cluedox's expiry detection smartly flags renewals weeks before. Like a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
+            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"What used to take an hour takes 5 minutes. Cluedox is essential for our clinic operations."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Found everything in under 2 seconds. The auto-tagging is frighteningly accurate."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
           </div>
         </div>
@@ -1361,10 +1362,10 @@ export default function SortifiLandingPage() {
         <div id="final-cta">
           <div className="fc-badge">✓ NOW LIVE</div>
           <h2 className="fc-heading">Start managing your documents intelligently — for free.</h2>
-          <p className="fc-sub">Join thousands of Indian professionals using Sortifi. Your data stays private — always.</p>
+          <p className="fc-sub">Join thousands of Indian professionals using Cluedox. Your data stays private — always.</p>
           <div className="fc-actions">
             <a href="#" className="btn-primary" style={{ fontSize: '16px', padding: '15px 36px', }}>Create Free Account →</a>
-            <a href="/cdn-cgi/l/email-protection#d3b5bca6bdb7b6a1a093a0bca1a7bab5bafdbabd" className="btn-ghost">founders@sortifi.in</a>
+            <a href="/cdn-cgi/l/email-protection#d3b5bca6bdb7b6a1a093a0bca1a7bab5bafdbabd" className="btn-ghost">founders@Cluedox.in</a>
           </div>
           <p className="fc-fine">No credit card required · Free plan available · Cancel anytime · Privacy Policy</p>
         </div>
@@ -1372,7 +1373,7 @@ export default function SortifiLandingPage() {
       <footer>
         <div className="footer-top">
           <div className="footer-brand">
-            <div className="footer-logo"><div className="footer-logo-icon">📁</div>Sortifi</div>
+            <div className="footer-logo"><div className="footer-logo-icon">📁</div>Cluedox</div>
             <p className="footer-tagline">Intelligent File Management, Reimagined</p>
             <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)', marginTop: '6px', fontFamily: 'var(--sans)', }}>📍 Pune, India</p>
             <div className="footer-socials">
@@ -1399,14 +1400,14 @@ export default function SortifiLandingPage() {
                 <li><a href="#">Terms of Service</a></li>
                 <li><a href="#">FAQ</a></li>
                 <li><a href="#">Help & Support</a></li>
-                <li><a href="/cdn-cgi/l/email-protection#5a3c352f343e3f28291a2935282e333c33743334">founders@sortifi.in</a></li>
+                <li><a href="/cdn-cgi/l/email-protection#5a3c352f343e3f28291a2935282e333c33743334">founders@Cluedox.in</a></li>
                 <li><a href="#">Twitter / X</a></li>
               </ul>
             </div>
           </div>
         </div>
         <div className="footer-bottom">
-          <span className="footer-copy">© 2026 Sortifi. All rights reserved.</span>
+          <span className="footer-copy">© 2026 Cluedox. All rights reserved.</span>
           <span className="footer-loc">Built in Pune 🇮🇳</span>
         </div>
       </footer>

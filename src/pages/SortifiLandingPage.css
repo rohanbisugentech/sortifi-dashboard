@@ -16,19 +16,19 @@
   --mono: 'DM Mono', monospace;
 }
 
-.sortifi-landing-page *,
-.sortifi-landing-page *::before,
-.sortifi-landing-page *::after {
+.Cluedox-landing-page *,
+.Cluedox-landing-page *::before,
+.Cluedox-landing-page *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.sortifi-landing-page html {
+.Cluedox-landing-page html {
   scroll-behavior: auto;
 }
 
-.sortifi-landing-page {
+.Cluedox-landing-page {
   font-family: var(--sans);
   background: var(--dark);
   color: var(--text-light);
@@ -48,7 +48,7 @@
 }
 
 /* ── NAVBAR ── */
-.sortifi-landing-page nav {
+.Cluedox-landing-page nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -2360,7 +2360,7 @@ nav.scrolled .nav-login {
 }
 
 /* ── FOOTER ── */
-.sortifi-landing-page footer {
+.Cluedox-landing-page footer {
   background: var(--dark);
   padding: 60px 80px 40px;
   position: relative;

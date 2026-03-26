@@ -1,8 +1,8 @@
 import { NavLink as RouterNavLink, useLocation, useNavigate } from "react-router-dom";
-import { 
-  Plus, X, ChevronDown, LayoutDashboard, Upload, FolderOpen, 
-  Search, Bell, LogOut, Moon, Sun, MessageCircle, FolderTree, 
-  ArrowLeftRight, Settings, Smartphone, BarChart3, Users, HardDrive 
+import {
+  Plus, X, ChevronDown, LayoutDashboard, Upload, FolderOpen,
+  Search, Bell, LogOut, Moon, Sun, MessageCircle, FolderTree,
+  ArrowLeftRight, Settings, Smartphone, BarChart3, Users, HardDrive
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -40,8 +40,8 @@ const AppSidebar = ({ onClose }: { onClose?: () => void }) => {
       {/* Header / Logo */}
       <div className="flex items-center justify-between px-6 py-5">
         <div className="flex items-center gap-2">
-          {/* We keep the elegant serif typography for Sortifi as well since it's the design aesthetic */}
-          <h1 className="text-2xl font-bold text-[#111]" style={{ fontFamily: "'Playfair Display', serif" }}>Sortifi</h1>
+          {/* We keep the elegant serif typography for Cluedox as well since it's the design aesthetic */}
+          <h1 className="text-2xl font-bold text-[#111]" style={{ fontFamily: "'Playfair Display', serif" }}>Cluedox</h1>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => navigate('/upload')} className="flex items-center gap-1.5 px-3 py-1.5 bg-[#EFEFEF] hover:bg-[#E5E5E5] transition-colors rounded-full text-xs font-semibold text-[#444]">
@@ -57,7 +57,7 @@ const AppSidebar = ({ onClose }: { onClose?: () => void }) => {
 
       {/* Main Navigation */}
       <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-6 scrollbar-hide">
-        
+
         {/* Workspace / Nav Items */}
         <div>
           <h3 className="px-3 text-[11px] font-semibold text-[#888] uppercase tracking-wider mb-2">Workspace</h3>
@@ -107,7 +107,7 @@ const AppSidebar = ({ onClose }: { onClose?: () => void }) => {
             </div>
             <div className="text-left">
               <p className="text-[13px] font-bold text-[#111] leading-none mb-1">User</p>
-              <p className="text-[10px] text-[#888] font-medium leading-none">Sortifi Plan</p>
+              <p className="text-[10px] text-[#888] font-medium leading-none">Cluedox Plan</p>
             </div>
           </div>
           <ChevronDown className="w-4 h-4 text-[#888]" />

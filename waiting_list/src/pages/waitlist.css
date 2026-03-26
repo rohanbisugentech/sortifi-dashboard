@@ -19,16 +19,16 @@
 }
 
 .waitlist-modal {
-  background: var(--dark-card);
+  background: var(--bg-secondary);
   border-radius: 20px;
   width: 100%;
   max-width: 440px;
   padding: 40px;
   position: relative;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-lg);
   animation: waitlistSlideUp 400ms cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border: 1px solid var(--border-light);
+  color: var(--text-dark);
 }
 
 @keyframes waitlistSlideUp {
@@ -44,8 +44,8 @@
   height: 32px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-dark);
   font-size: 20px;
   display: flex;
   align-items: center;
@@ -55,7 +55,7 @@
 }
 
 .waitlist-close:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
 
@@ -80,16 +80,16 @@
 
 .waitlist-header h2 {
   font-family: var(--serif);
-  font-size: 32px;
-  font-weight: 500;
+  font-size: var(--size-h1);
+  font-weight: var(--weight-medium);
   margin-bottom: 8px;
-  color: #ffffff;
+  color: var(--text-dark);
 }
 
 .waitlist-header p {
   font-family: var(--sans);
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.65);
+  font-size: var(--size-body-sm);
+  color: var(--text-muted-dark);
   line-height: 1.5;
 }
 
@@ -101,9 +101,9 @@
 .waitlist-input-group label {
   display: block;
   font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--size-body-xs);
+  font-weight: var(--weight-semibold);
+  color: var(--text-muted-dark);
   margin-bottom: 8px;
 }
 
@@ -111,11 +111,11 @@
   width: 100%;
   padding: 14px 16px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.05);
-  color: #ffffff;
+  border: 1px solid var(--border-medium);
+  background: rgba(0, 0, 0, 0.02);
+  color: var(--text-dark);
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: var(--size-body-sm);
   transition: all 200ms ease;
   outline: none;
 }
@@ -131,17 +131,17 @@
   font-size: 16px;
   font-weight: 700 !important;
   margin-top: 10px;
-  background: #ffffff !important;
-  color: var(--dark) !important;
+  background: var(--accent2) !important;
+  color: var(--text-light) !important;
   border: none !important;
   border-radius: 999px;
-  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 .waitlist-submit:hover:not(:disabled) {
   transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
 }
 
 .waitlist-submit:disabled {
@@ -171,13 +171,13 @@
   font-size: 32px;
   font-weight: 500;
   margin-bottom: 12px;
-  color: #ffffff;
+  color: var(--text-dark);
 }
 
 .waitlist-success p {
   font-family: var(--sans);
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-muted-dark);
   line-height: 1.5;
   margin-bottom: 32px;
 }

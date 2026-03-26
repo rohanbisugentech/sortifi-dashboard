@@ -14,7 +14,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
     <div className="flex h-screen w-full bg-[#0A1610] p-2 md:p-4 overflow-hidden">
       {/* The floating white app window */}
       <div className="flex-1 flex overflow-hidden bg-[#FCFCFB] rounded-2xl shadow-2xl border border-white/10 relative">
-        
+
         {/* Mobile overlay */}
         {isMobile && sidebarOpen && (
           <div
@@ -51,11 +51,11 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
               >
                 <Menu className="w-5 h-5 text-zinc-700" />
               </button>
-              <div className="text-xl font-serif font-bold text-zinc-800" style={{ fontFamily: "'Playfair Display', serif" }}>sortifi</div>
+              <div className="text-xl font-serif font-bold text-zinc-800" style={{ fontFamily: "'Playfair Display', serif" }}>Cluedox</div>
               <NotificationBell />
             </div>
           )}
-          
+
           {/* Content */}
           <div className="h-full pb-20 md:pb-0">
             {children}
