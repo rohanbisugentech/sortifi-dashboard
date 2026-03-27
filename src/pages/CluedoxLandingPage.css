@@ -156,7 +156,7 @@ nav.scrolled .nav-logo {
 .nav-logo-icon {
   width: 28px;
   height: 28px;
-  background: var(--accent);
+  background: black;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -165,7 +165,7 @@ nav.scrolled .nav-logo {
 }
 
 nav.scrolled .nav-logo-icon {
-  background: var(--accent);
+  background: black;
 }
 
 .nav-links {
@@ -286,8 +286,8 @@ nav.scrolled .nav-login {
 
 .hero-sub {
   font-size: var(--size-body-lg);
-  font-weight: var(--weight-light);
-  color: var(--text-muted-dark);
+  font-weight: var(--weight-normal);
+  color: black;
   max-width: 800px;
   margin: 0 auto 40px;
   line-height: 1.6;
@@ -1099,7 +1099,7 @@ nav.scrolled .nav-login {
   top: 0;
   left: 0;
   right: 0;
-  padding: 80px 0 0;
+  padding: 0px 0 0;
   text-align: center;
   z-index: 50;
   pointer-events: none;
@@ -2057,7 +2057,7 @@ nav.scrolled .nav-login {
 /* ── SECURITY ── */
 #security {
   background: var(--dark);
-  padding: 120px 48px;
+  padding: 40px 48px;
   position: relative;
   z-index: 1;
 }
@@ -2398,7 +2398,7 @@ nav.scrolled .nav-login {
 /* ── ROADMAP ── */
 #roadmap {
   background: var(--dark);
-  padding: 120px 48px;
+  padding: 40px 48px;
   position: relative;
   z-index: 1;
 }
@@ -2665,7 +2665,7 @@ nav.scrolled .nav-login {
 
 .footer-social:hover {
   border-color: rgba(255, 255, 255, 0.5);
-  color: #fff;
+  color: black;
 }
 
 .footer-links {
@@ -2688,7 +2688,7 @@ nav.scrolled .nav-login {
   gap: 10px;
 }
 
-.footer-col-links a {
+.footer-col-links li a {
   font-size: var(--size-body-sm);
   color: rgba(0, 0, 0, 0.7);
   /* Darker text for contrast (FC-08) */
@@ -2697,8 +2697,8 @@ nav.scrolled .nav-login {
   font-weight: 500;
 }
 
-.footer-col-links a:hover {
-  color: var(--bg-accent);
+.footer-col-links li a:hover {
+  color: black;
 }
 
 .footer-bottom {
@@ -2966,7 +2966,7 @@ nav.scrolled .nav-login {
   }
 
   #who {
-    padding: 80px 0 0;
+    padding: 40px 0 0;
   }
 
   .who-heading {
@@ -3275,7 +3275,7 @@ nav.scrolled .nav-login {
 }
 
 .footer-socials a:hover {
-  color: #fff;
+  color: black;
   transform: translateY(-2px);
 }
 
@@ -3285,4 +3285,41 @@ nav.scrolled .nav-login {
 
 .footer-links a:hover {
   color: #fff;
+}
+
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-out;
+  transition: all 0.3s ease;
+}
+
+.scroll-top:hover {
+  background: #d19f7b;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -1,9 +1,9 @@
 // @ts-nocheck
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
 import { supabase } from "@/integrations/supabase/client";
 import './CluedoxLandingPage.css';
 
@@ -13,6 +13,7 @@ import './waitlist.css';
 
 export default function CluedoxLandingPage() {
   const navigate = useNavigate();
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const solutionRef = useRef<HTMLElement>(null);
   const words = React.useMemo(() => ["Memory", "Meaning", "Content", "Context", "Dates"], []);
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
@@ -106,47 +107,48 @@ export default function CluedoxLandingPage() {
   useGSAP(() => {
 
     /* ── PARTICLES ── */
-    (function () {
-      function initParticles() {
-        const canvas = document.getElementById('particles-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let W, H, dots = [];
-        function resize() {
-          W = canvas.width = window.innerWidth;
-          H = canvas.height = document.body.scrollHeight;
-          dots = [];
-          for (let i = 0; i < 180; i++) {
-            dots.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.5 + 0.5, o: Math.random() * 0.15 + 0.05 });
-          }
-          drawDots();
+    const initParticles = () => {
+      const canvas = document.getElementById('particles-canvas') as HTMLCanvasElement;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      let W: number, H: number, dots: any[] = [];
+
+      const resize = () => {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = document.body.scrollHeight;
+        dots = [];
+        for (let i = 0; i < 180; i++) {
+          dots.push({ x: Math.random() * W, y: Math.random() * H, r: Math.random() * 1.5 + 0.5, o: Math.random() * 0.15 + 0.05 });
         }
-        function drawDots() {
-          ctx.clearRect(0, 0, W, H);
-          dots.forEach(d => {
-            ctx.beginPath();
-            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255,255,255,${d.o})`;
-            ctx.fill();
-          });
-        }
-        window.addEventListener('resize', () => { setTimeout(resize, 100); });
-        setTimeout(resize, 100);
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initParticles);
-      } else {
-        initParticles();
-      }
-    })();
+        drawDots();
+      };
+
+      const drawDots = () => {
+        ctx.clearRect(0, 0, W, H);
+        dots.forEach(d => {
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,255,255,${d.o})`;
+          ctx.fill();
+        });
+      };
+
+      resize();
+      window.addEventListener('resize', resize);
+      return () => window.removeEventListener('resize', resize);
+    };
+    /* ── PARTICLES ── */
+    const particleCleanup = initParticles();
 
     /* ── NAVBAR SCROLL ── */
     const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
+    const handleNavbarScroll = () => {
       if (!navbar) return;
       if (window.scrollY > 60) navbar.classList.add('scrolled');
       else navbar.classList.remove('scrolled');
-    }, { passive: true });
+    };
+    window.addEventListener('scroll', handleNavbarScroll, { passive: true });
 
     /* ── MASTER HERO TIMELINE ── */
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -210,7 +212,7 @@ export default function CluedoxLandingPage() {
     });
 
     /* ══ WIRE ANIMATION SCRIPT ══ */
-    (function () {
+    const wireAnimWrapper = () => {
 
       /* ── CONFIG ── */
       const WCARDS = [
@@ -240,6 +242,8 @@ export default function CluedoxLandingPage() {
         V: [document.getElementById('wpV'), document.getElementById('wpVg')],
       };
 
+      if (!wstage || !wsbox || !wcA) return;
+
       /* ── MATHS ── */
       const vw = p => p / 100 * window.innerWidth;
       const vh = p => p / 100 * window.innerHeight;
@@ -249,22 +253,25 @@ export default function CluedoxLandingPage() {
       const ei = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
       const lp = (a, b, t) => a + (b - a) * t;
 
-      function rel(el) {
-        const sr = wstage.getBoundingClientRect();
-        const er = el.getBoundingClientRect();
+      function rel(el: HTMLElement | null) {
+        if (!el) return { t: 0, l: 0, cx: 0, cy: 0, bcx: 0, tcx: 0, h: 0, w: 0 };
+        // Use offset values for stability relative to pinned container
+        const t = el.offsetTop;
+        const l = el.offsetLeft;
+        const w = el.offsetWidth;
+        const h = el.offsetHeight;
         return {
-          t: er.top - sr.top, b: er.bottom - sr.top,
-          l: er.left - sr.left, r: er.right - sr.left,
-          w: er.width, h: er.height,
-          cx: er.left - sr.left + er.width / 2,
-          cy: er.top - sr.top + er.height / 2,
-          bcx: er.left - sr.left + er.width / 2, bcy: er.bottom - sr.top,
-          tcx: er.left - sr.left + er.width / 2, tcy: er.top - sr.top,
+          t, l, w, h,
+          cx: l + w / 2,
+          cy: t + h / 2,
+          bcx: l + w / 2, bcy: t + h,
+          tcx: l + w / 2, tcy: t,
         };
       }
 
       function sv(x, y) {
-        return { x: x / window.innerWidth * 1440, y: y / window.innerHeight * 900 };
+        if (!wstage) return { x, y };
+        return { x: x / wstage.clientWidth * 1440, y: y / wstage.clientHeight * 900 };
       }
 
       function cubic(x1, y1, x2, y2) {
@@ -273,6 +280,7 @@ export default function CluedoxLandingPage() {
       }
 
       function setPath(el, d) {
+        if (!el) return 0;
         el.setAttribute('d', d);
         const L = el.getTotalLength ? el.getTotalLength() : 600;
         el.setAttribute('stroke-dasharray', L);
@@ -280,6 +288,7 @@ export default function CluedoxLandingPage() {
       }
 
       function draw(el, frac, L) {
+        if (!el) return;
         el.setAttribute('stroke-dashoffset', L * (1 - cl(frac, 0, 1)));
       }
 
@@ -287,7 +296,9 @@ export default function CluedoxLandingPage() {
 
       function placeAll() {
         WCARDS.forEach(c => {
-          gsap.set(document.getElementById(c.id), {
+          const cardEl = document.getElementById(c.id);
+          if (!cardEl) return;
+          gsap.set(cardEl, {
             left: vw(c.sc.l), top: vh(c.sc.t),
             rotation: c.sr, opacity: 1, x: 0, y: 0,
             width: '', height: '',
@@ -301,12 +312,13 @@ export default function CluedoxLandingPage() {
           width: sbW, opacity: 0, scale: 0.92,
         });
 
-        expanded.style.display = 'none';
-        expanded.style.opacity = '0';
-        compact.style.display = 'block';
-        compact.style.opacity = '1';
+        if (expanded) expanded.style.display = 'none';
+        if (expanded) expanded.style.opacity = '0';
+        if (compact) compact.style.display = 'block';
+        if (compact) compact.style.opacity = '1';
 
         Object.values(WP).forEach(([g, gg]) => {
+          if (!g || !gg) return;
           g.style.opacity = '0';
           gg.style.opacity = '0';
           const Lg = parseFloat(g.getAttribute('stroke-dasharray')) || 999;
@@ -322,7 +334,9 @@ export default function CluedoxLandingPage() {
       const floats = [];
       function startFloat() {
         WCARDS.forEach((c, i) => {
-          const t = gsap.to(document.getElementById(c.id), {
+          const cardEl = document.getElementById(c.id);
+          if (!cardEl) return;
+          const t = gsap.to(cardEl, {
             y: '-=9', duration: 2.0 + i * .38,
             repeat: -1, yoyo: true, ease: 'sine.inOut', delay: i * .3,
           });
@@ -336,7 +350,7 @@ export default function CluedoxLandingPage() {
         const sbR = rel(wsbox);
         const sbTopSV = sv(sbR.tcx, sbR.tcy);
 
-        const BEkeys = ['B', 'C', 'D', 'E'];
+        const BEkeys = ['B', 'C', 'D', 'E'] as const;
         BEkeys.forEach(k => {
           const idx = { B: 1, C: 2, D: 3, E: 4 }[k];
           const er = rel(document.getElementById(WCARDS[idx].id));
@@ -346,9 +360,11 @@ export default function CluedoxLandingPage() {
           setPath(WP[k][1], d);
           if (!locked[k]) {
             draw(WP[k][0], 0, L);
-          } else {
+          } else if (WP[k][0] && WP[k][1]) {
             WP[k][0].setAttribute('stroke-dashoffset', '0');
             WP[k][1].setAttribute('stroke-dashoffset', '0');
+            WP[k][0].style.opacity = '1';
+            WP[k][1].style.opacity = '1';
           }
         });
 
@@ -357,19 +373,15 @@ export default function CluedoxLandingPage() {
         const dA = cubic(sA.x, sA.y, sbTopSV.x, sbTopSV.y);
         const LA = setPath(WP.A[0], dA);
         setPath(WP.A[1], dA);
-        if (!locked.A) {
-          // still drawing
-        } else {
+
+        if (locked.A && WP.A[0] && WP.A[1]) {
           WP.A[0].setAttribute('stroke-dashoffset', '0');
           WP.A[1].setAttribute('stroke-dashoffset', '0');
           WP.A[0].style.opacity = '1';
           WP.A[1].style.opacity = '1';
         }
 
-        if (slideP > 0) {
-          WP.V[0].style.opacity = '0';
-          WP.V[1].style.opacity = '0';
-        } else {
+        if (slideP > 0 && WP.V[0] && WP.V[1]) {
           WP.V[0].style.opacity = '0';
           WP.V[1].style.opacity = '0';
         }
@@ -380,6 +392,7 @@ export default function CluedoxLandingPage() {
         /* 1. Cards migrate */
         WCARDS.forEach((c, i) => {
           const el = document.getElementById(c.id);
+          if (!el) return;
           const ms = 0.08 + i * 0.022;
           const me = 0.32 + i * 0.008;
           const mp = ei(pr(p, ms, me));
@@ -404,13 +417,13 @@ export default function CluedoxLandingPage() {
         updateWires(slideP);
 
         /* 3. Wire draw progress */
-        const wireOrder = ['B', 'C', 'D', 'E', 'A'];
+        const wireOrder = ['B', 'C', 'D', 'E', 'A'] as const;
         wireOrder.forEach((k, i) => {
           const ws = 0.30 + i * 0.032;
           const we = ws + 0.14;
           const wp = pr(p, ws, we);
 
-          if (!locked[k]) {
+          if (!locked[k] && WP[k][0] && WP[k][1]) {
             const L = parseFloat(WP[k][0].getAttribute('stroke-dasharray')) || 600;
             draw(WP[k][0], wp, L);
             WP[k][0].style.opacity = wp > 0 ? '1' : '0';
@@ -424,36 +437,42 @@ export default function CluedoxLandingPage() {
 
           const idx = { A: 0, B: 1, C: 2, D: 3, E: 4 }[k];
           const cardEl = document.getElementById(WCARDS[idx].id);
-          if (pr(p, ws, we) > 0.85) cardEl.classList.add('wired');
-          else cardEl.classList.remove('wired');
+          if (cardEl) {
+            if (pr(p, ws, we) > 0.85) cardEl.classList.add('wired');
+            else cardEl.classList.remove('wired');
+          }
         });
 
         /* 4. Sbox */
         const sbP = eo(pr(p, 0.50, 0.62));
         gsap.set(wsbox, { opacity: sbP, scale: 0.92 + sbP * 0.08 });
-        wsbox.querySelector('.wdot-t').style.opacity = sbP > 0.65 ? '1' : '0';
+        const dotT = wsbox.querySelector('.wdot-t') as HTMLElement;
+        if (dotT) dotT.style.opacity = sbP > 0.65 ? '1' : '0';
 
         /* 5. Typing */
         const typP = pr(p, 0.62, 0.78);
-        if (typP > 0 && typP < 1) {
-          document.getElementById('wtyped').textContent = QUERY.slice(0, Math.floor(typP * QUERY.length));
-          wcur.classList.add('on');
-        } else if (typP <= 0) {
-          document.getElementById('wtyped').textContent = '';
-          wcur.classList.remove('on');
-        } else {
-          document.getElementById('wtyped').textContent = QUERY;
-          wcur.classList.remove('on');
+        const typedEl = document.getElementById('wtyped');
+        if (typedEl) {
+          if (typP > 0 && typP < 1) {
+            typedEl.textContent = QUERY.slice(0, Math.floor(typP * QUERY.length));
+            wcur.classList.add('on');
+          } else if (typP <= 0) {
+            typedEl.textContent = '';
+            wcur.classList.remove('on');
+          } else {
+            typedEl.textContent = QUERY;
+            wcur.classList.remove('on');
+          }
         }
-        wsbox.querySelector('.wdot-b').style.opacity = typP >= 1 ? '1' : '0';
+        const dotB = wsbox.querySelector('.wdot-b') as HTMLElement;
+        if (dotB) dotB.style.opacity = typP >= 1 ? '1' : '0';
 
         /* 6. Card A slides DOWN and EXPANDS IN PLACE */
         if (slideP > 0) {
-          const sbRect = wsbox.getBoundingClientRect();
-          const srRect = wstage.getBoundingClientRect();
-          const endTop = (sbRect.bottom - srRect.top) + 28;
-          const endLeft = (window.innerWidth - Math.min(460, window.innerWidth * 0.84)) / 2;
-          const endW = Math.min(460, window.innerWidth * 0.84);
+          const sbR = rel(wsbox);
+          const endTop = sbR.bcy + 28;
+          const endLeft = (wstage.clientWidth - Math.min(460, wstage.clientWidth * 0.84)) / 2;
+          const endW = Math.min(460, wstage.clientWidth * 0.84);
 
           const cANow = rel(wcA);
           const curTop = lp(cA_gatheredTop || cANow.t, endTop, slideP);
@@ -468,23 +487,25 @@ export default function CluedoxLandingPage() {
           });
 
           const crossP = eo(pr(slideP, 0.25, 0.75));
-          compact.style.opacity = String(1 - crossP);
-          expanded.style.display = 'block';
-          expanded.style.opacity = String(crossP);
+          if (compact) compact.style.opacity = String(1 - crossP);
+          if (expanded) expanded.style.display = 'block';
+          if (expanded) expanded.style.opacity = String(crossP);
 
           floats.forEach(t => t.pause());
           gsap.set(wcA, { y: 0 });
 
         } else {
-          compact.style.opacity = '1';
-          expanded.style.display = 'none';
+          if (compact) compact.style.opacity = '1';
+          if (expanded) expanded.style.display = 'none';
         }
 
         /* 7. Toast */
         const toastP = eo(pr(p, 0.88, 0.95));
         if (toastP > 0) {
-          const sbB = wsbox.getBoundingClientRect().bottom - wstage.getBoundingClientRect().top;
-          const cAT = rel(wcA).t;
+          const sbR = rel(wsbox);
+          const cardAR = rel(wcA);
+          const sbB = sbR.bcy;
+          const cAT = cardAR.t;
           const midY = (sbB + cAT) / 2 - 16;
           gsap.set(wtoast, {
             opacity: toastP, top: midY, bottom: 'auto',
@@ -495,8 +516,7 @@ export default function CluedoxLandingPage() {
         }
       }
 
-      /* ── INIT ── */
-      function init() {
+      const initWireAnim = () => {
         placeAll();
         startFloat();
 
@@ -509,17 +529,18 @@ export default function CluedoxLandingPage() {
           scrub: 3.5,
           onUpdate(self) { drive(self.progress); },
         });
-      }
+      };
 
-      window.addEventListener('load', () => {
-        requestAnimationFrame(() => requestAnimationFrame(init));
-      });
-      window.addEventListener('resize', () => {
+      initWireAnim();
+
+      const handleWireResize = () => {
         placeAll();
         ScrollTrigger.refresh();
-      });
-
-    })();
+      };
+      window.addEventListener('resize', handleWireResize);
+      return () => window.removeEventListener('resize', handleWireResize);
+    };
+    const wireCleanup = wireAnimWrapper();
 
     /* ── CAPTURE ── */
     gsap.to('#capture-left', {
@@ -559,17 +580,17 @@ export default function CluedoxLandingPage() {
       opacity: 1, y: 0, duration: 0.7, ease: 'power2.out'
     });
 
-    /* ── CAROUSEL HORIZONTAL SCROLL ── */
     /* ── CAROUSEL CLONING (BUG-05, BUG-06, BUG-17) ── */
     const cloneItems = (trackId) => {
       const track = document.getElementById(trackId);
-      if (!track) return;
+      if (!track || track.dataset.cloned) return;
       const children = Array.from(track.children);
       children.forEach(child => {
         const clone = child.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         track.appendChild(clone);
       });
+      track.dataset.cloned = "true";
     };
 
     cloneItems('carousel-track');
@@ -578,14 +599,16 @@ export default function CluedoxLandingPage() {
     cloneItems('fg-row-2');
     cloneItems('fg-row-3');
 
-    // Testimonial cloning (special logic for multiple rows)
     gsap.utils.toArray('.testi-row').forEach(row => {
-      const children = Array.from(row.children);
+      const r = row as HTMLElement;
+      if (r.dataset.cloned) return;
+      const children = Array.from(r.children);
       children.forEach(child => {
         const clone = child.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
-        row.appendChild(clone);
+        r.appendChild(clone);
       });
+      r.dataset.cloned = "true";
     });
 
     /* ── SECURITY GRID ── */
@@ -619,7 +642,13 @@ export default function CluedoxLandingPage() {
     });
 
     /* ── SCROLL REFRESH ── */
-    window.addEventListener('load', () => { ScrollTrigger.refresh(); });
+    const handleScrollRefresh = () => ScrollTrigger.refresh();
+    window.addEventListener('load', handleScrollRefresh);
+
+    // Initial refresh after a short delay to allow React to settle
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
     /* ── SOLUTION CARD ANIMATIONS ── */
     gsap.to(".solution-card", {
       scrollTrigger: {
@@ -644,7 +673,6 @@ export default function CluedoxLandingPage() {
       duration: 0.6,
       ease: "power2.out",
     });
-
     gsap.to(".terminal-line", {
       scrollTrigger: {
         trigger: ".terminal",
@@ -668,10 +696,17 @@ export default function CluedoxLandingPage() {
       duration: 0.6,
       ease: "power2.out",
     });
-  }, []); // consolidated into first hook
+
+    return () => {
+      window.removeEventListener('scroll', handleNavbarScroll);
+      window.removeEventListener('load', handleScrollRefresh);
+      particleCleanup && (particleCleanup as any)();
+      wireCleanup && wireCleanup();
+    };
+  }, { dependencies: [], scope: containerRef }); // consolidated into first hook
 
   return (
-    <div className="Cluedox-landing-page">
+    <div className="Cluedox-landing-page" ref={containerRef}>
       <nav id="navbar">
         <a href="#" className="nav-logo">
           <div className="nav-logo-icon">📁</div>
@@ -719,7 +754,7 @@ export default function CluedoxLandingPage() {
 
         <p className="hero-eyebrow" style={{ position: 'relative', zIndex: '10', }}>✦ <span>Early Access — Intelligent File Management</span></p>
         <h1 className="hero-heading" id="hero-heading" style={{ position: 'relative', zIndex: '10' }}>
-          Search any file by {currentText}<span className="cursor-blink" style={{ fontWeight: 300, display: 'inline-block' }}>|</span>
+          Search any file by {currentText}<span className="cursor-blink" style={{ fontWeight: 300, display: 'inline-block' }}></span>
         </h1>
         <p className="hero-sub" style={{ position: 'relative', zIndex: '10', }}>Cluedox <strong>securely organises every document you own</strong> — automatically. Search by meaning, find what you need instantly, never lose a file again.</p>
         <div className="hero-actions" style={{ position: 'relative', zIndex: '10', }}>
@@ -1452,26 +1487,8 @@ export default function CluedoxLandingPage() {
 
       {showScrollTop && (
         <button
+          className="scroll-top"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          style={{
-            position: 'fixed',
-            bottom: '32px',
-            right: '32px',
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            background: 'var(--dark)',
-            color: 'white',
-            border: 'none',
-            cursor: 'pointer',
-            zIndex: '1000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '20px',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            animation: 'fadeIn 0.3s ease-out'
-          }}
         >
           ↑
         </button>
