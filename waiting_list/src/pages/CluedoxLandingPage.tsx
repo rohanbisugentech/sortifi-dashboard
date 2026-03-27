@@ -1250,8 +1250,8 @@ export default function CluedoxLandingPage() {
       <section id="security">
         <div className="security-inner">
           <div className="section-eyebrow">⊞ SECURITY & PRIVACY</div>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: '#fff', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
+          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: 'black', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
+          <p style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
           <div className="security-grid" id="security-grid">
             <div className="sec-card"><div className="sec-card-icon">🔒</div><div className="sec-card-title">AES-256 + TLS 1.3</div><div className="sec-card-body">Military-grade encryption at rest and in transit. Your files are always protected.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🛡️</div><div className="sec-card-title">Zero Knowledge</div><div className="sec-card-body">Our team physically cannot access your file contents. Only you hold the keys — by design.</div></div>
