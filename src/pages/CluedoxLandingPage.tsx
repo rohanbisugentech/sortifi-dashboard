@@ -16,15 +16,29 @@ export default function CluedoxLandingPage() {
   const solutionRef = useRef<HTMLElement>(null);
   const words = React.useMemo(() => ["Memory", "Meaning", "Content", "Context", "Dates"], []);
   const [currentWordIndex, setCurrentWordIndex] = React.useState(0);
-  const [currentText, setCurrentText] = React.useState("");
+  const [currentText, setCurrentText] = React.useState("Memory");
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [isWaitlistOpen, setIsWaitlistOpen] = React.useState(false);
   const [waitlistStatus, setWaitlistStatus] = React.useState<'idle' | 'submitting' | 'success'>('idle');
   const [email, setEmail] = React.useState('');
   const [name, setName] = React.useState('');
   const [waitlistError, setWaitlistError] = React.useState('');
+  const [showScrollTop, setShowScrollTop] = React.useState(false);
 
   React.useEffect(() => {
+    document.title = "Cluedox - Intelligent File Management for Indian Professionals";
+
+    const description = document.createElement('meta');
+    description.name = "description";
+    description.content = "Cluedox organises every document you own automatically. Search by meaning, get expiry reminders, and never lose a file again. Built for Indian professionals.";
+    document.head.appendChild(description);
+
+    const favicon = document.createElement('link');
+    favicon.rel = "icon";
+    favicon.type = "image/png";
+    favicon.href = "https://cdn-icons-png.flaticon.com/512/3767/3767084.png"; // Placeholder 32x32 PNG icon
+    document.head.appendChild(favicon);
+
     const trackVisitor = async () => {
       try {
         await supabase.rpc('increment_visitor_count');
@@ -33,6 +47,16 @@ export default function CluedoxLandingPage() {
       }
     };
     trackVisitor();
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.head.removeChild(description);
+      document.head.removeChild(favicon);
+    };
   }, []);
 
   const handleJoinWaitlist = async (e: React.FormEvent) => {
@@ -477,7 +501,7 @@ export default function CluedoxLandingPage() {
         startFloat();
 
         ScrollTrigger.create({
-          trigger: '#wire-wrap',
+          trigger: '#how-it-works',
           start: 'top top',
           end: 'bottom bottom',
           pin: '#wire-stage',
@@ -536,8 +560,33 @@ export default function CluedoxLandingPage() {
     });
 
     /* ── CAROUSEL HORIZONTAL SCROLL ── */
-    const track = document.getElementById('carousel-track');
-    track.innerHTML += track.innerHTML;
+    /* ── CAROUSEL CLONING (BUG-05, BUG-06, BUG-17) ── */
+    const cloneItems = (trackId) => {
+      const track = document.getElementById(trackId);
+      if (!track) return;
+      const children = Array.from(track.children);
+      children.forEach(child => {
+        const clone = child.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+    };
+
+    cloneItems('carousel-track');
+    cloneItems('marquee-inner');
+    cloneItems('fg-row-1');
+    cloneItems('fg-row-2');
+    cloneItems('fg-row-3');
+
+    // Testimonial cloning (special logic for multiple rows)
+    gsap.utils.toArray('.testi-row').forEach(row => {
+      const children = Array.from(row.children);
+      children.forEach(child => {
+        const clone = child.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        row.appendChild(clone);
+      });
+    });
 
     /* ── SECURITY GRID ── */
     gsap.utils.toArray('#security-grid .sec-card').forEach((el, i) => {
@@ -630,7 +679,7 @@ export default function CluedoxLandingPage() {
         </a>
         <ul className="nav-links">
           <li><a href="#features">Features</a></li>
-          <li><a href="#wire-wrap">How It Works</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="#security">Security</a></li>
           <li><a href="#roadmap">Roadmap</a></li>
         </ul>
@@ -668,14 +717,14 @@ export default function CluedoxLandingPage() {
           </div>
         </div>
 
-        <p className="hero-eyebrow" style={{ position: 'relative', zIndex: '10', }}>✦ <span>Now Live — Intelligent File Management</span></p>
+        <p className="hero-eyebrow" style={{ position: 'relative', zIndex: '10', }}>✦ <span>Early Access — Intelligent File Management</span></p>
         <h1 className="hero-heading" id="hero-heading" style={{ position: 'relative', zIndex: '10' }}>
           Search any file by {currentText}<span className="cursor-blink" style={{ fontWeight: 300, display: 'inline-block' }}>|</span>
         </h1>
         <p className="hero-sub" style={{ position: 'relative', zIndex: '10', }}>Cluedox <strong>securely organises every document you own</strong> — automatically. Search by meaning, find what you need instantly, never lose a file again.</p>
         <div className="hero-actions" style={{ position: 'relative', zIndex: '10', }}>
-          <button onClick={() => navigate('/login')} className="btn-primary">Get Started Free →</button>
-          <a href="#features" className="btn-ghost">Explore Features ↓</a>
+          <button onClick={() => navigate('/login')} className="btn-primary hero-main-cta">Get Started Free →</button>
+          <a href="#features" className="btn-ghost" style={{ borderWidth: '2px' }}>Explore Features ↓</a>
         </div>
 
         <div className="hero-bottom-glow"></div>
@@ -726,14 +775,14 @@ export default function CluedoxLandingPage() {
                 <span style={{ fontSize: '11px', color: 'rgba(10,31,20,0.3)', fontFamily: 'var(--sans)', }}>9 modes</span>
               </div>
               <div className="pw-tabs">
-                <span className="pw-tab active">All Files</span>
+                <span className="pw-tab active" style={{ color: 'black' }}>All Files</span>
                 <span className="pw-tab">PDFs</span>
                 <span className="pw-tab">📋 Legal</span>
                 <span className="pw-tab">💰 Finance</span>
                 <span className="pw-tab">⏰ Expiring</span>
                 <span className="pw-tab">👥 Shared</span>
               </div>
-              <div className="pw-section-title">Recent Files</div>
+              <div className="pw-section-title" style={{ color: 'black' }}>Recent Files</div>
               <div className="pw-grid">
                 <div className="pw-file-card">
                   <div className="pw-file-thumb" style={{ background: '#fdecea', }}>📋</div>
@@ -782,7 +831,7 @@ export default function CluedoxLandingPage() {
       </div>
       <section id="solution" ref={solutionRef}>
         <div className="solution-card" id="solution-card">
-          <div className="section-eyebrow" style={{ justifyContent: 'center', }}>⊞ THE SOLUTION</div>
+          <div className="section-eyebrow" style={{ justifyContent: 'center', }}>✦ THE SOLUTION</div>
           <h2 className="solution-heading">Cluedox securely organises your files.</h2>
           <p className="solution-sub">The moment you upload a document, Cluedox securely categorises it — letting you find what you need by meaning, not just filename.</p>
           <div className="solution-checks">
@@ -791,7 +840,7 @@ export default function CluedoxLandingPage() {
             <span className="solution-check">Expiry reminders</span>
             <span className="solution-check">Semantic search</span>
             <span className="solution-check">Doc Chat</span>
-            <span className="solution-check">Secure sharing</span>
+            <span className="solution-check">Secure file sharing</span>
           </div>
 
           <div className="terminal">
@@ -805,9 +854,9 @@ export default function CluedoxLandingPage() {
             <div className="terminal-line search">"health insurance", "renewal", "March 2026"</div>
           </div>
 
-          <div className="solution-cta-area">
+          {/* <div className="solution-cta-area">
             <button onClick={() => setIsWaitlistOpen(true)} className="btn-outline-white" style={{ border: '1px solid rgba(0,0,0,0.15)', background: 'transparent', color: 'var(--text-dark)', padding: '12px 28px', borderRadius: '999px', cursor: 'pointer', fontSize: '15px' }}>Join Waiting List</button>
-          </div>
+          </div> */}
 
           <div className="feature-grid-mini" id="fgm">
             <div className="fgm-item">
@@ -832,8 +881,8 @@ export default function CluedoxLandingPage() {
             </div>
             <div className="fgm-item">
               <div className="fgm-icon">👥</div>
-              <div className="fgm-title">Team Collaboration</div>
-              <div className="fgm-body">Create teams, shared folders, role-based access. Every member sees only what they should.</div>
+              <div className="fgm-title">Secure File Sharing</div>
+              <div className="fgm-body">Share files with time-limited links that auto-expire. Set view-once mode for sensitive documents. You control everything.</div>
             </div>
             <div className="fgm-item">
               <div className="fgm-icon">☁️</div>
@@ -849,8 +898,8 @@ export default function CluedoxLandingPage() {
                 {[
                   { name: 'Google Drive', url: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' },
                   { name: 'WhatsApp', url: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg' },
-                  { name: 'Google Drive', url: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' },
-                  { name: 'WhatsApp', url: 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg' },
+                  { name: 'Zoho', text: 'Zoho', color: '#DE2F32' },
+                  { name: 'Tally', text: 'Tally', color: '#16365E' },
                 ].map((tool, idx) => (
                   <div key={idx} className="marquee-icon" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid rgba(0,0,0,0.05)', padding: tool.text ? '8px' : '10px' }}>
                     {tool.text ? (
@@ -865,7 +914,7 @@ export default function CluedoxLandingPage() {
           </div>
         </div>
       </section>
-      <div id="wire-wrap">
+      <div id="how-it-works">
         <div id="wire-stage">
 
           <svg id="wire-svg" viewBox="0 0 1440 900" preserveAspectRatio="none">
@@ -888,7 +937,7 @@ export default function CluedoxLandingPage() {
           </svg>
 
           <div id="wire-heading">
-            <div className="wh-eyebrow">⊞ HOW IT WORKS</div>
+            <div className="wh-eyebrow">✦ HOW IT WORKS</div>
             <h2 className="wh-h1">Your mess of files,<br />sorted in seconds.</h2>
             <p className="wh-sub">Drop anything — Cluedox connects the dots automatically.</p>
           </div>
@@ -952,7 +1001,7 @@ export default function CluedoxLandingPage() {
       <section id="capture">
         <div className="capture-inner">
           <div className="capture-left" id="capture-left">
-            <div className="section-eyebrow">⊞ CAPTURE</div>
+            <div className="section-eyebrow">✦ CAPTURE</div>
             <h2 className="capture-heading">
               Upload
               <span className="word-slider">
@@ -962,7 +1011,6 @@ export default function CluedoxLandingPage() {
                   <span className="ws-word">PDFs.</span>
                   <span className="ws-word">Receipts.</span>
                   <span className="ws-word">Images.</span>
-                  <span className="ws-word">Anything.</span>
                 </span>
               </span>
               <br />
@@ -990,10 +1038,10 @@ export default function CluedoxLandingPage() {
       </section>
       <section id="features">
         <div className="features-inner">
-          <div className="section-eyebrow" style={{ justifyContent: 'center', marginBottom: '20px', }}>⊞ CORE FEATURES</div>
+          <div className="section-eyebrow" style={{ justifyContent: 'center', marginBottom: '20px', }}>✦ CORE FEATURES</div>
           <p className="features-quote" id="features-quote">"If AI could handle your filing, how much time would you have for the <em>work that actually matters?</em>"</p>
-          <div className="features-cta-area" id="features-cta">
-            <button onClick={() => setIsWaitlistOpen(true)} className="btn-dark-solid">Join Waiting List</button>
+          <div className="nav-actions flex justify-center mb-20 mt-20">
+            <button className="btn-primary hero-main-cta" onClick={() => navigate('/login')}>Get Started Free</button>
           </div>
 
           <div className="feature-cards-grid" id="feat-grid">
@@ -1033,7 +1081,7 @@ export default function CluedoxLandingPage() {
             </div>
             <div className="feat-card" data-delay="80">
               <div className="feat-card-icon">📤</div>
-              <div className="feat-card-title">Write Content, Share Securely</div>
+              <div className="feat-card-title">Secure File Sharing</div>
               <div className="feat-card-body">Share files with time-limited links that auto-expire. Set view-once mode for sensitive documents.</div>
             </div>
             <div className="feat-card" data-delay="160">
@@ -1045,7 +1093,7 @@ export default function CluedoxLandingPage() {
         </div>
       </section>
       <section id="who">
-        <div className="section-eyebrow" style={{ justifyContent: 'center', }}>⊞ WHO'S Cluedox FOR</div>
+        <div className="section-eyebrow" style={{ justifyContent: 'center', }}>✦ WHO'S CLUEDOX FOR</div>
         <h2 className="who-heading" id="who-heading">
           For
           <span className="word-slider" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
@@ -1058,7 +1106,7 @@ export default function CluedoxLandingPage() {
               <span className="ws-word">People</span>
             </span>
           </span>
-          who work with documents and can't afford to lose them.
+          <br />who work with documents and can't afford to lose them.
         </h2>
 
         <div id="carousel-wrapper">
@@ -1066,7 +1114,7 @@ export default function CluedoxLandingPage() {
             <div className="carousel-track-outer">
               <div className="carousel-track" id="carousel-track">
                 <div className="audience-card ac-freelancer">
-                  <div className="ac-label">Use Case</div>
+                  <div className="ac-label">USE CASE</div>
                   <div className="ac-title">Free­lancers</div>
                   <div className="ac-body">Client contracts, invoices, project files — auto-organised.</div>
                   <div className="ac-tags">
@@ -1087,7 +1135,7 @@ export default function CluedoxLandingPage() {
                 </div>
 
                 <div className="audience-card ac-business">
-                  <div className="ac-label">Use Case</div>
+                  <div className="ac-label">USE CASE</div>
                   <div className="ac-title">Small Biz</div>
                   <div className="ac-body">GST documents, vendor agreements, employee files — always compliant.</div>
                   <div className="ac-tags">
@@ -1108,7 +1156,7 @@ export default function CluedoxLandingPage() {
                 </div>
 
                 <div className="audience-card ac-legal">
-                  <div className="ac-label">Use Case</div>
+                  <div className="ac-label">USE CASE</div>
                   <div className="ac-title">CA & Legal</div>
                   <div className="ac-body">Case files, compliance docs, renewal deadlines — automated.</div>
                   <div className="ac-tags">
@@ -1129,7 +1177,7 @@ export default function CluedoxLandingPage() {
                 </div>
 
                 <div className="audience-card ac-healthcare">
-                  <div className="ac-label">Use Case</div>
+                  <div className="ac-label">USE CASE</div>
                   <div className="ac-title">Health­care</div>
                   <div className="ac-body">Patient records, insurance docs, license renewals — organised and secure.</div>
                   <div className="ac-tags">
@@ -1150,7 +1198,7 @@ export default function CluedoxLandingPage() {
                 </div>
 
                 <div className="audience-card ac-students">
-                  <div className="ac-label">Use Case</div>
+                  <div className="ac-label">USE CASE</div>
                   <div className="ac-title">Students</div>
                   <div className="ac-body">Papers, notes, references, thesis drafts — intelligently organised.</div>
                   <div className="ac-tags">
@@ -1176,7 +1224,7 @@ export default function CluedoxLandingPage() {
       </section>
       <section id="security">
         <div className="security-inner">
-          <div className="section-eyebrow">⊞ SECURITY & PRIVACY</div>
+          <div className="section-eyebrow">✦ SECURITY & PRIVACY</div>
           <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: 'black', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
           <p style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
           <div className="security-grid" id="security-grid">
@@ -1184,24 +1232,25 @@ export default function CluedoxLandingPage() {
             <div className="sec-card"><div className="sec-card-icon">🛡️</div><div className="sec-card-title">Zero Knowledge</div><div className="sec-card-body">Our team physically cannot access your file contents. Only you hold the keys — by design.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🚫</div><div className="sec-card-title">No Data Trading</div><div className="sec-card-body">Your data is never sold, shared with third parties, or used for advertising. Ever.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🤖</div><div className="sec-card-title">AI Privacy</div><div className="sec-card-body">Cluedox processes your files in real-time securely. Your content never trains any AI model.</div></div>
-            <div className="sec-card"><div className="sec-card-icon">🇮🇳</div><div className="sec-card-title">DPDP 2023 Ready</div><div className="sec-card-body">Built for India's Digital Personal Data Protection Act 2023 from day one.</div></div>
+            <div className="sec-card"><div className="sec-card-icon">
+              <svg width="24" height="16" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="24" height="16" rx="2" fill="#FF9933" />
+                <rect y="5.33334" width="24" height="5.33333" fill="white" />
+                <rect y="10.6667" width="24" height="5.33333" fill="#138808" />
+                <circle cx="12" cy="8" r="2" stroke="#000080" strokeWidth="0.5" />
+              </svg>
+            </div><div className="sec-card-title">DPDP 2023 Ready</div><div className="sec-card-body">Built for India's Digital Personal Data Protection Act 2023 from day one.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🗑️</div><div className="sec-card-title">Right to Delete</div><div className="sec-card-body">Delete your account and all data is permanently wiped within 30 days. No hidden copies.</div></div>
           </div>
         </div>
       </section>
       <section id="testimonials">
         <div style={{ textAlign: 'center', padding: '80px 0 48px', }}>
-          <div className="section-eyebrow" style={{ justifyContent: 'center', marginBottom: '16px', }}>⊞ WHAT PEOPLE SAY</div>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', color: '#fff', }}>Trusted by early testers across India.</h2>
+          <div className="section-eyebrow" style={{ justifyContent: 'center', marginBottom: '16px', }}>✦ WHAT PEOPLE SAY</div>
+          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(36px,4vw,52px)', color: '#1a1a1a', }}>Trusted by early testers across India.</h2>
         </div>
         <div className="testi-rows">
           <div className="testi-row testi-row-1">
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Cluedox found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The auto-reminder for our insurance renewals alone is worth it. We almost missed a ₹40L policy renewal."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Cluedox. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The natural language search understood 'GST invoices from March' perfectly. It just works."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c4617a', }}>AS</div><div><div className="testi-name">Arjun Shah</div><div className="testi-role">SMB Owner · Ahmedabad</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★☆</div><p className="testi-quote">"Cluedox's semantic search found papers relevant to my thesis that I'd completely forgotten I had."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#8aaa8a', }}>NJ</div><div><div className="testi-name">Neha Joshi</div><div className="testi-role">PhD Researcher · IIT Delhi</div></div></div></div>
-            <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Cluedox's expiry detection smartly flags renewals weeks before. It's like having a personal filing assistant."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#c8b99a', }}>VM</div><div><div className="testi-name">Vikram Mehta</div><div className="testi-role">Legal Firm Partner · Delhi</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"I used to spend 30 minutes every morning hunting for client contracts. Cluedox found everything in under 2 seconds."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#2d6a45', }}>RK</div><div><div className="testi-name">Rahul Khedekar</div><div className="testi-role">Freelance Consultant · Pune</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"The auto-reminder for our insurance renewals alone is worth it. We almost missed a ₹40L policy renewal."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#7f8fbd', }}>PR</div><div><div className="testi-name">Priya Rawat</div><div className="testi-role">CA · Mumbai</div></div></div></div>
             <div className="testi-card"><div className="testi-stars">★★★★★</div><p className="testi-quote">"Our clinic now manages all patient consent forms through Cluedox. What used to take an hour takes 5 minutes."</p><div className="testi-author"><div className="testi-avatar" style={{ background: '#b08faf', }}>DP</div><div><div className="testi-name">Dr. Deepa Pillai</div><div className="testi-role">Healthcare Clinic · Bangalore</div></div></div></div>
@@ -1227,8 +1276,8 @@ export default function CluedoxLandingPage() {
       </section>
       <section id="roadmap">
         <div className="roadmap-inner">
-          <div className="section-eyebrow">⊞ ROADMAP</div>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,56px)', color: '#fff', marginTop: '12px', lineHeight: '1.1', }}>Where we're going.</h2>
+          <div className="section-eyebrow">✦ ROADMAP</div>
+          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,56px)', color: '#1a1a1a', marginTop: '12px', lineHeight: '1.1', }}>Where we're going.</h2>
           <div className="roadmap-track" id="roadmap-track">
             <div className="roadmap-item">
               <div className="rm-dot-col">
@@ -1282,15 +1331,9 @@ export default function CluedoxLandingPage() {
         </div>
       </section>
       <div id="footer-gallery">
+        <div className="marquee-label" style={{ textAlign: 'center', marginBottom: '24px', color: 'rgba(0,0,0,0.5)', fontSize: '14px' }}>Live Activity Preview · How Cluedox works in real-time</div>
         <div className="fg-rows">
-          <div className="fg-row fg-row-1">
-            <div className="fg-item"><span className="fgi-icon">📋</span><span className="fgi-text">insurance_policy.pdf · Categorised</span></div>
-            <div className="fg-item"><span className="fgi-icon">📊</span><span className="fgi-text">gst_march_2025.xlsx · Tagged</span></div>
-            <div className="fg-item"><span className="fgi-icon">⏰</span><span className="fgi-text">Renewal reminder set · 30 days</span></div>
-            <div className="fg-item"><span className="fgi-icon">🔍</span><span className="fgi-text">Search: "health insurance"</span></div>
-            <div className="fg-item"><span className="fgi-icon">📝</span><span className="fgi-text">employment_contract.pdf · Legal</span></div>
-            <div className="fg-item"><span className="fgi-icon">🔐</span><span className="fgi-text">AES-256 encryption · Active</span></div>
-            <div className="fg-item"><span className="fgi-icon">👥</span><span className="fgi-text">Team folder shared · 3 members</span></div>
+          <div className="fg-row fg-row-1" id="fg-row-1">
             <div className="fg-item"><span className="fgi-icon">📋</span><span className="fgi-text">insurance_policy.pdf · Categorised</span></div>
             <div className="fg-item"><span className="fgi-icon">📊</span><span className="fgi-text">gst_march_2025.xlsx · Tagged</span></div>
             <div className="fg-item"><span className="fgi-icon">⏰</span><span className="fgi-text">Renewal reminder set · 30 days</span></div>
@@ -1299,14 +1342,7 @@ export default function CluedoxLandingPage() {
             <div className="fg-item"><span className="fgi-icon">🔐</span><span className="fgi-text">AES-256 encryption · Active</span></div>
             <div className="fg-item"><span className="fgi-icon">👥</span><span className="fgi-text">Team folder shared · 3 members</span></div>
           </div>
-          <div className="fg-row fg-row-2">
-            <div className="fg-item"><span className="fgi-icon">🧾</span><span className="fgi-text">invoice_q1.pdf · Finance</span></div>
-            <div className="fg-item"><span className="fgi-icon">💬</span><span className="fgi-text">"What's my renewal date?" · Answered</span></div>
-            <div className="fg-item"><span className="fgi-icon">📁</span><span className="fgi-text">Smart folder created · Medical</span></div>
-            <div className="fg-item"><span className="fgi-icon">🇮🇳</span><span className="fgi-text">DPDP 2023 · Compliant</span></div>
-            <div className="fg-item"><span className="fgi-icon">☁️</span><span className="fgi-text">Google Drive synced · 842 files</span></div>
-            <div className="fg-item"><span className="fgi-icon">📊</span><span className="fgi-text">vendor_agreement.pdf · Compared</span></div>
-            <div className="fg-item"><span className="fgi-icon">🔗</span><span className="fgi-text">Secure link · Expires 24hr</span></div>
+          <div className="fg-row fg-row-2" id="fg-row-2">
             <div className="fg-item"><span className="fgi-icon">🧾</span><span className="fgi-text">invoice_q1.pdf · Finance</span></div>
             <div className="fg-item"><span className="fgi-icon">💬</span><span className="fgi-text">"What's my renewal date?" · Answered</span></div>
             <div className="fg-item"><span className="fgi-icon">📁</span><span className="fgi-text">Smart folder created · Medical</span></div>
@@ -1315,13 +1351,7 @@ export default function CluedoxLandingPage() {
             <div className="fg-item"><span className="fgi-icon">📊</span><span className="fgi-text">vendor_agreement.pdf · Compared</span></div>
             <div className="fg-item"><span className="fgi-icon">🔗</span><span className="fgi-text">Secure link · Expires 24hr</span></div>
           </div>
-          <div className="fg-row fg-row-3">
-            <div className="fg-item"><span className="fgi-icon">🏥</span><span className="fgi-text">health_report.pdf · Medical</span></div>
-            <div className="fg-item"><span className="fgi-icon">✓</span><span className="fgi-text">Tagged: GST · Compliance · 2025</span></div>
-            <div className="fg-item"><span className="fgi-icon">📋</span><span className="fgi-text">4,502 files organised intelligently</span></div>
-            <div className="fg-item"><span className="fgi-icon">⚡</span><span className="fgi-text">Search time: 0.3 seconds</span></div>
-            <div className="fg-item"><span className="fgi-icon">🛡️</span><span className="fgi-text">Zero-knowledge architecture</span></div>
-            <div className="fg-item"><span className="fgi-icon">🤖</span><span className="fgi-text">AI Chat · V4.0 · Coming 2027</span></div>
+          <div className="fg-row fg-row-3" id="fg-row-3">
             <div className="fg-item"><span className="fgi-icon">🏥</span><span className="fgi-text">health_report.pdf · Medical</span></div>
             <div className="fg-item"><span className="fgi-icon">✓</span><span className="fgi-text">Tagged: GST · Compliance · 2025</span></div>
             <div className="fg-item"><span className="fgi-icon">📋</span><span className="fgi-text">4,502 files organised intelligently</span></div>
@@ -1333,14 +1363,14 @@ export default function CluedoxLandingPage() {
       </div>
       <section style={{ background: 'var(--dark)', padding: '0 0 0', position: 'relative', zIndex: '1', }}>
         <div id="final-cta">
-          <div className="fc-badge">✓ NOW LIVE</div>
+          <div className="fc-badge">✓ EARLY ACCESS</div>
           <h2 className="fc-heading">Start managing your documents intelligently — for free.</h2>
           <p className="fc-sub">Join thousands of Indian professionals using Cluedox. Your data stays private — always.</p>
           <div className="fc-actions">
-            <button onClick={() => navigate('/login')} className="btn-primary">Get Started Now →</button>
-            <a href="mailto:founders@Cluedox.in" className="btn-ghost">founders@Cluedox.in</a>
+            <button onClick={() => navigate('/login')} className="btn-primary hero-main-cta" style={{ transform: 'scale(1.1)' }}>Get Started Now →</button>
+            <a href="mailto:founders@cluedox.in" className="btn-ghost" style={{ borderWidth: '2px' }}>founders@cluedox.in</a>
           </div>
-          <p className="fc-fine">No credit card required · Free plan available · Cancel anytime · Privacy Policy</p>
+          <p className="fc-fine">No credit card required · Free plan available · Cancel anytime · <a href="#privacy" style={{ color: 'inherit', textDecoration: 'underline' }}>Privacy Policy</a></p>
         </div>
       </section>
       <footer>
@@ -1350,31 +1380,30 @@ export default function CluedoxLandingPage() {
             <p className="footer-tagline">Intelligent File Management, Reimagined</p>
             <p className="footer-loc-tag">📍 Pune, India</p>
             <div className="footer-socials">
-              <a href="#" className="footer-social">𝕏</a>
-              <a href="#" className="footer-social">✉</a>
+              <a href="https://twitter.com/cluedox" target="_blank" rel="noopener noreferrer" className="footer-social">𝕏</a>
+              <a href="mailto:founders@cluedox.in" className="footer-social">✉</a>
             </div>
           </div>
           <div className="footer-links">
             <div>
               <div className="footer-col-title">Product</div>
               <ul className="footer-col-links">
-                <li><a href="#">Features</a></li>
-                <li><a href="#">How It Works</a></li>
-                <li><a href="#">Security</a></li>
-                <li><a href="#">Roadmap</a></li>
-                <li><a href="#">Pricing</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#pricing">Pricing</a></li>
               </ul>
             </div>
             <div>
               <div className="footer-col-title">Legal & Support</div>
               <ul className="footer-col-links">
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">FAQ</a></li>
-                <li><a href="#">Help & Support</a></li>
-                <li><a href="mailto:founders@Cluedox.in">founders@Cluedox.in</a></li>
-                <li><a href="#">Twitter / X</a></li>
+                <li><a href="#privacy">Privacy Policy</a></li>
+                <li><a href="#terms">Terms of Service</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="mailto:support@cluedox.in">Help & Support</a></li>
+                <li><a href="mailto:founders@cluedox.in">founders@cluedox.in</a></li>
+                <li><a href="https://twitter.com/cluedox">Twitter / X</a></li>
               </ul>
             </div>
           </div>
@@ -1419,6 +1448,33 @@ export default function CluedoxLandingPage() {
             )}
           </div>
         </div>
+      )}
+
+      {showScrollTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          style={{
+            position: 'fixed',
+            bottom: '32px',
+            right: '32px',
+            width: '48px',
+            height: '48px',
+            borderRadius: '50%',
+            background: 'var(--dark)',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            zIndex: '1000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '20px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            animation: 'fadeIn 0.3s ease-out'
+          }}
+        >
+          ↑
+        </button>
       )}
     </div>
   );

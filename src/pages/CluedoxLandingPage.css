@@ -6,9 +6,9 @@
   --bg-secondary: #ffffff;
   --bg-card: #ffffff;
   --bg-card-hover: #fafafa;
-  --bg-accent: #2d6a45;
+  --bg-accent: #030303;
   /* Primary Action Color */
-  --bg-accent-hover: #5fce8a;
+  --bg-accent-hover: #d19f7b;
 
   /* Backward compatibility for existing rules */
   --dark: var(--bg-primary);
@@ -26,7 +26,7 @@
   --text-inverse: #F8F5EF;
   /* Text on dark backgrounds */
   --text-muted-inverse: rgba(248, 245, 239, 0.65);
-  --text-accent: #2d6a45;
+  --text-accent: #060606;
 
   /* Alias for consistency with previous edits */
   --text-dark: var(--text-primary);
@@ -70,9 +70,10 @@
   /* 
    * Primary Brand & Accents
    */
-  --accent: #d19f7b;
+  --accent: #b47a54;
+  /* Darker amber for better contrast (FC-04) */
   --accent2: black;
-  --accent3: #5fce8a;
+  --accent3: #d19f7b;
 }
 
 .Cluedox-landing-page *,
@@ -223,7 +224,7 @@ nav.scrolled .nav-login {
 }
 
 .nav-cta:hover {
-  background: var(--accent);
+  background: #d19f7b;
   transform: translateY(-2px);
 }
 
@@ -351,10 +352,23 @@ nav.scrolled .nav-login {
 
 .btn-ghost:hover {
   background: #fff;
-  border-color: #d19f7b;
-  color: #d19f7b;
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(209, 159, 123, 0.1);
+  box-shadow: 0 10px 20px rgba(180, 122, 84, 0.1);
+}
+
+/* BUG-20: Hero CTA Accent */
+.hero-main-cta {
+  background: var(--bg-accent) !important;
+  color: white !important;
+  border: 1px solid var(--bg-accent) !important;
+}
+
+.hero-main-cta:hover {
+  background: var(--bg-accent-hover) !important;
+  border-color: var(--bg-accent-hover) !important;
+  box-shadow: 0 8px 25px rgba(95, 206, 138, 0.3) !important;
 }
 
 /* ── FAINT BACKGROUND FRAMES ── */
@@ -761,7 +775,7 @@ nav.scrolled .nav-login {
 .pw-file-name {
   font-size: 10px;
   font-weight: 500;
-  color: var(--dark);
+  color: black;
   font-family: var(--sans);
   margin-bottom: 3px;
   white-space: nowrap;
@@ -1048,7 +1062,7 @@ nav.scrolled .nav-login {
 }
 
 /* ══ WIRE SECTION — FIXED ══ */
-#wire-wrap {
+#how-it-works {
   position: relative;
   min-height: 700vh;
   /* increased scroll room for scrub + padding */
@@ -1536,6 +1550,7 @@ nav.scrolled .nav-login {
 
 .ws-word {
   height: 1.1em;
+  color: #d19f7b;
   display: flex;
   align-items: center;
   line-height: 1.1;
@@ -1688,11 +1703,13 @@ nav.scrolled .nav-login {
 }
 
 .feat-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.6);
+  /* Increased contrast for light background (FC-05) */
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  /* Visible border (FC-06) */
   border-radius: 16px;
   padding: 28px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
   opacity: 0;
   transform: translateY(28px);
   backdrop-filter: blur(8px);
@@ -1808,7 +1825,7 @@ nav.scrolled .nav-login {
 
 .sgm-item {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(208, 135, 76, 0.08);
   border-radius: 8px;
   padding: 10px;
   transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -1907,11 +1924,13 @@ nav.scrolled .nav-login {
 .ac-label {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  /* Bolder for contrast (FC-10) */
   margin-bottom: 8px;
   font-family: var(--sans);
-  opacity: 0.6;
+  opacity: 0.85;
+  /* Increased opacity for accessibility */
 }
 
 .ac-title {
@@ -2106,11 +2125,11 @@ nav.scrolled .nav-login {
 }
 
 .testi-row-1 {
-  animation: marquee-left 30s linear infinite;
+  animation: marquee-left 175s linear infinite;
 }
 
 .testi-row-2 {
-  animation: marquee-left 36s linear infinite reverse;
+  animation: marquee-left 175s linear infinite reverse;
 }
 
 .testi-card {
@@ -2411,8 +2430,10 @@ nav.scrolled .nav-login {
   left: 59px;
   top: 32px;
   bottom: 0;
-  width: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  width: 2px;
+  /* Thicker line (FC-03) */
+  background: rgba(0, 0, 0, 0.15);
+  /* Darker color for contrast */
 }
 
 .roadmap-item:last-child::before {
@@ -2535,15 +2556,15 @@ nav.scrolled .nav-login {
 }
 
 .fg-row-1 {
-  animation: marquee-left 28s linear infinite;
+  animation: marquee-left 100s linear infinite;
 }
 
 .fg-row-2 {
-  animation: marquee-left 22s linear infinite reverse;
+  animation: marquee-left 110s linear infinite reverse;
 }
 
 .fg-row-3 {
-  animation: marquee-left 32s linear infinite;
+  animation: marquee-left 100s linear infinite;
 }
 
 .fg-item {
@@ -2669,14 +2690,15 @@ nav.scrolled .nav-login {
 
 .footer-col-links a {
   font-size: var(--size-body-sm);
-  color: var(--text-muted-dark);
+  color: rgba(0, 0, 0, 0.7);
+  /* Darker text for contrast (FC-08) */
   text-decoration: none;
   transition: color 150ms ease;
-  font-weight: var(--weight-light);
+  font-weight: 500;
 }
 
 .footer-col-links a:hover {
-  color: var(--text-dark);
+  color: var(--bg-accent);
 }
 
 .footer-bottom {
@@ -2689,7 +2711,8 @@ nav.scrolled .nav-login {
 
 .footer-copy {
   font-size: var(--size-body-xs);
-  color: var(--text-muted);
+  color: rgba(0, 0, 0, 0.6);
+  /* Darker copy for contrast */
   font-family: var(--sans);
 }
 
@@ -2730,7 +2753,7 @@ nav.scrolled .nav-login {
 
 .fc-heading {
   font-family: var(--serif);
-  font-size: var(--size-h1);
+  font-size: 43PX;
   color: var(--text-dark);
   max-width: 640px;
   margin: 0 auto 16px;
@@ -2848,7 +2871,7 @@ nav.scrolled .nav-login {
     overflow-y: visible;
   }
 
-  #wire-wrap {
+  #how-it-works {
     padding-bottom: 80px;
   }
 
@@ -3129,6 +3152,8 @@ nav.scrolled .nav-login {
 
 .btn-ghost {
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  border-width: 2px !important;
+  /* BUG-21: Thicker border */
 }
 
 .btn-ghost:hover {
