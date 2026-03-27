@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* 
    * Colors - Backgrounds & Surfaces
    */
@@ -1050,10 +1050,11 @@ nav.scrolled .nav-login {
 /* ══ WIRE SECTION — FIXED ══ */
 #wire-wrap {
   position: relative;
-  min-height: 220vh;
+  min-height: 700vh;
+  /* increased scroll room for scrub + padding */
   background: var(--bg-primary);
   z-index: 10;
-  padding: 0;
+  padding: 0 0 200px 0;
 }
 
 #wire-stage {
@@ -1476,7 +1477,7 @@ nav.scrolled .nav-login {
 #capture {
   position: relative;
   background: var(--dark);
-  padding: 120px 80px;
+  padding: 595px 80px 100px;
   z-index: 1;
 }
 

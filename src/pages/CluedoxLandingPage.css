@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   /* 
    * Colors - Backgrounds & Surfaces
    */
@@ -1050,10 +1050,11 @@ nav.scrolled .nav-login {
 /* ══ WIRE SECTION — FIXED ══ */
 #wire-wrap {
   position: relative;
-  min-height: 220vh;
+  min-height: 700vh;
+  /* increased scroll room for scrub + padding */
   background: var(--bg-primary);
   z-index: 10;
-  padding: 0;
+  padding: 0 0 200px 0;
 }
 
 #wire-stage {
@@ -1476,7 +1477,7 @@ nav.scrolled .nav-login {
 #capture {
   position: relative;
   background: var(--dark);
-  padding: 120px 80px;
+  padding: 595px 80px 100px;
   z-index: 1;
 }
 
@@ -2584,8 +2585,6 @@ nav.scrolled .nav-login {
   margin-bottom: 48px;
 }
 
-.footer-brand {}
-
 .footer-logo {
   font-family: var(--serif);
   font-size: 20px;
@@ -3136,7 +3135,7 @@ nav.scrolled .nav-login {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-  color: #fff;
+  color: black;
   border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -3151,7 +3150,7 @@ nav.scrolled .nav-login {
 .nav-cta:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(230, 255, 131, 0.3);
-  background: #f0ff99;
+  background: (--accent);
 }
 
 .nav-cta:active {

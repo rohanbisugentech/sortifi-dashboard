@@ -476,96 +476,25 @@ export default function CluedoxLandingPage() {
         placeAll();
         startFloat();
 
-        /* ── FIXED: autoplay-on-enter replaces scrub/pin ── */
-        const animProxy = { p: 0 };
-        const autoplay = gsap.to(animProxy, {
-          p: 1,
-          duration: 4.8,
-          ease: "none",
-          paused: true,
-          onUpdate: () => drive(animProxy.p)
-        });
-
         ScrollTrigger.create({
           trigger: '#wire-wrap',
-          start: 'top 50%',
-          onEnter: () => autoplay.play(),
-          once: true
-        });
-
-        // Resilience: Refresh and re-drive on resize
-        const handleResize = () => {
-          ScrollTrigger.refresh();
-          drive(animProxy.p);
-        };
-        window.addEventListener('resize', handleResize);
-
-        // Hero timeline
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-        gsap.fromTo('#navbar',
-          { y: -100, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: 'power4.out' }
-        );
-
-        tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8 }, "+=0.2")
-          .to('.hero-heading', { opacity: 1, duration: 0.8 }, "-=0.4")
-          .to('.hero-sub', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-          .to('.hero-actions', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-          .fromTo('.hero-bg-frames .hbf-card',
-            { opacity: 0, scale: 0.9 },
-            { opacity: 0.5, scale: 1, stagger: 0.08, duration: 0.8 }, "-=0.8")
-          .fromTo('#product-window',
-            { opacity: 0, y: 60, scale: 0.98 },
-            { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'expo.out' },
-            "-=0.6"
-          )
-          .fromTo('.pw-sidebar .pw-sb-item',
-            { opacity: 0, x: -10 },
-            { opacity: 1, x: 0, stagger: 0.04, duration: 0.4, ease: 'power2.out' },
-            "-=0.8"
-          )
-          .fromTo('.pw-file-card',
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, stagger: 0.04, duration: 0.5, ease: 'power2.out' },
-            "-=0.6"
-          );
-
-        gsap.to('#product-window', {
-          y: "-=12",
-          duration: 4,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: 2.5
-        });
-
-        gsap.utils.toArray('.hbf-card').forEach((card: any, i: number) => {
-          const speed = (i % 2 === 0) ? -80 : -140;
-          gsap.to(card, {
-            y: speed,
-            ease: "none",
-            scrollTrigger: {
-              trigger: '#hero',
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true
-            }
-          });
+          start: 'top top',
+          end: 'bottom bottom',
+          pin: '#wire-stage',
+          pinSpacing: false,
+          scrub: 3.5,
+          onUpdate(self) { drive(self.progress); },
         });
       }
 
-      /* ── FIXED: simple init trigger ── */
-      if (document.readyState === 'complete') {
-        init();
-      } else {
-        window.addEventListener('load', init);
-      }
-
+      window.addEventListener('load', () => {
+        requestAnimationFrame(() => requestAnimationFrame(init));
+      });
       window.addEventListener('resize', () => {
         placeAll();
         ScrollTrigger.refresh();
       });
+
     })();
 
     /* ── CAPTURE ── */
@@ -642,10 +571,7 @@ export default function CluedoxLandingPage() {
 
     /* ── SCROLL REFRESH ── */
     window.addEventListener('load', () => { ScrollTrigger.refresh(); });
-  }, []);
-
-
-  useGSAP(() => {
+    /* ── SOLUTION CARD ANIMATIONS ── */
     gsap.to(".solution-card", {
       scrollTrigger: {
         trigger: ".solution-card",
@@ -693,7 +619,7 @@ export default function CluedoxLandingPage() {
       duration: 0.6,
       ease: "power2.out",
     });
-  }, { scope: solutionRef });
+  }, []); // consolidated into first hook
 
   return (
     <div className="Cluedox-landing-page">

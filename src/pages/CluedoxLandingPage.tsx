@@ -476,96 +476,25 @@ export default function CluedoxLandingPage() {
         placeAll();
         startFloat();
 
-        /* ── FIXED: autoplay-on-enter replaces scrub/pin ── */
-        const animProxy = { p: 0 };
-        const autoplay = gsap.to(animProxy, {
-          p: 1,
-          duration: 4.8,
-          ease: "none",
-          paused: true,
-          onUpdate: () => drive(animProxy.p)
-        });
-
         ScrollTrigger.create({
           trigger: '#wire-wrap',
-          start: 'top 50%',
-          onEnter: () => autoplay.play(),
-          once: true
-        });
-
-        // Resilience: Refresh and re-drive on resize
-        const handleResize = () => {
-          ScrollTrigger.refresh();
-          drive(animProxy.p);
-        };
-        window.addEventListener('resize', handleResize);
-
-        // Hero timeline
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-        gsap.fromTo('#navbar',
-          { y: -100, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: 'power4.out' }
-        );
-
-        tl.to('.hero-eyebrow', { opacity: 1, y: 0, duration: 0.8 }, "+=0.2")
-          .to('.hero-heading', { opacity: 1, duration: 0.8 }, "-=0.4")
-          .to('.hero-sub', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-          .to('.hero-actions', { opacity: 1, y: 0, duration: 0.8 }, "-=0.6")
-          .fromTo('.hero-bg-frames .hbf-card',
-            { opacity: 0, scale: 0.9 },
-            { opacity: 0.5, scale: 1, stagger: 0.08, duration: 0.8 }, "-=0.8")
-          .fromTo('#product-window',
-            { opacity: 0, y: 60, scale: 0.98 },
-            { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: 'expo.out' },
-            "-=0.6"
-          )
-          .fromTo('.pw-sidebar .pw-sb-item',
-            { opacity: 0, x: -10 },
-            { opacity: 1, x: 0, stagger: 0.04, duration: 0.4, ease: 'power2.out' },
-            "-=0.8"
-          )
-          .fromTo('.pw-file-card',
-            { opacity: 0, y: 15 },
-            { opacity: 1, y: 0, stagger: 0.04, duration: 0.5, ease: 'power2.out' },
-            "-=0.6"
-          );
-
-        gsap.to('#product-window', {
-          y: "-=12",
-          duration: 4,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-          delay: 2.5
-        });
-
-        gsap.utils.toArray('.hbf-card').forEach((card: any, i: number) => {
-          const speed = (i % 2 === 0) ? -80 : -140;
-          gsap.to(card, {
-            y: speed,
-            ease: "none",
-            scrollTrigger: {
-              trigger: '#hero',
-              start: 'top top',
-              end: 'bottom top',
-              scrub: true
-            }
-          });
+          start: 'top top',
+          end: 'bottom bottom',
+          pin: '#wire-stage',
+          pinSpacing: false,
+          scrub: 3.5,
+          onUpdate(self) { drive(self.progress); },
         });
       }
 
-      /* ── FIXED: simple init trigger ── */
-      if (document.readyState === 'complete') {
-        init();
-      } else {
-        window.addEventListener('load', init);
-      }
-
+      window.addEventListener('load', () => {
+        requestAnimationFrame(() => requestAnimationFrame(init));
+      });
       window.addEventListener('resize', () => {
         placeAll();
         ScrollTrigger.refresh();
       });
+
     })();
 
     /* ── CAPTURE ── */
@@ -642,10 +571,7 @@ export default function CluedoxLandingPage() {
 
     /* ── SCROLL REFRESH ── */
     window.addEventListener('load', () => { ScrollTrigger.refresh(); });
-  }, []);
-
-
-  useGSAP(() => {
+    /* ── SOLUTION CARD ANIMATIONS ── */
     gsap.to(".solution-card", {
       scrollTrigger: {
         trigger: ".solution-card",
@@ -693,7 +619,7 @@ export default function CluedoxLandingPage() {
       duration: 0.6,
       ease: "power2.out",
     });
-  }, { scope: solutionRef });
+  }, []); // consolidated into first hook
 
   return (
     <div className="Cluedox-landing-page">
@@ -709,7 +635,8 @@ export default function CluedoxLandingPage() {
           <li><a href="#roadmap">Roadmap</a></li>
         </ul>
         <div className="nav-actions">
-          <button className="nav-cta" onClick={() => setIsWaitlistOpen(true)}>Join Waiting List</button>
+          <button className="nav-login" onClick={() => navigate('/login')}>Log In</button>
+          <button className="nav-cta" onClick={() => navigate('/login')}>Get Started Free</button>
         </div>
       </nav>
       <section id="hero">
@@ -747,7 +674,7 @@ export default function CluedoxLandingPage() {
         </h1>
         <p className="hero-sub" style={{ position: 'relative', zIndex: '10', }}>Cluedox <strong>securely organises every document you own</strong> — automatically. Search by meaning, find what you need instantly, never lose a file again.</p>
         <div className="hero-actions" style={{ position: 'relative', zIndex: '10', }}>
-          <button onClick={() => setIsWaitlistOpen(true)} className="btn-primary">Join Waiting List →</button>
+          <button onClick={() => navigate('/login')} className="btn-primary">Get Started Free →</button>
           <a href="#features" className="btn-ghost">Explore Features ↓</a>
         </div>
 
@@ -1250,8 +1177,8 @@ export default function CluedoxLandingPage() {
       <section id="security">
         <div className="security-inner">
           <div className="section-eyebrow">⊞ SECURITY & PRIVACY</div>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: '#fff', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
-          <p style={{ fontSize: '16px', color: 'rgba(255,255,255,0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
+          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(40px,5vw,58px)', color: 'black', marginTop: '12px', maxWidth: '600px', lineHeight: '1.1', }}>Your data is sacred.<br />We treat it that way.</h2>
+          <p style={{ fontSize: '16px', color: 'rgba(0, 0, 0, 0.5)', maxWidth: '540px', marginTop: '16px', lineHeight: '1.65', fontWeight: '300', }}>Cluedox is built privacy-first from the ground up. We don't sell your data, never share it with advertisers, and never use your files to train AI models.</p>
           <div className="security-grid" id="security-grid">
             <div className="sec-card"><div className="sec-card-icon">🔒</div><div className="sec-card-title">AES-256 + TLS 1.3</div><div className="sec-card-body">Military-grade encryption at rest and in transit. Your files are always protected.</div></div>
             <div className="sec-card"><div className="sec-card-icon">🛡️</div><div className="sec-card-title">Zero Knowledge</div><div className="sec-card-body">Our team physically cannot access your file contents. Only you hold the keys — by design.</div></div>
@@ -1410,7 +1337,7 @@ export default function CluedoxLandingPage() {
           <h2 className="fc-heading">Start managing your documents intelligently — for free.</h2>
           <p className="fc-sub">Join thousands of Indian professionals using Cluedox. Your data stays private — always.</p>
           <div className="fc-actions">
-            <button onClick={() => setIsWaitlistOpen(true)} className="btn-primary">Join Waiting List →</button>
+            <button onClick={() => navigate('/login')} className="btn-primary">Get Started Now →</button>
             <a href="mailto:founders@Cluedox.in" className="btn-ghost">founders@Cluedox.in</a>
           </div>
           <p className="fc-fine">No credit card required · Free plan available · Cancel anytime · Privacy Policy</p>
